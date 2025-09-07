@@ -1,6 +1,6 @@
 server:
   port: 8000
-redis:
+valkey:
   host: valkey
   port: 6379
 cpe:
