@@ -13,7 +13,7 @@ class CPEGuesser:
         self.rdb = valkey.Valkey(
             host=settings.valkey.host,
             port=settings.valkey.port,
-            db=8,
+            db=settings.valkey.db,
             decode_responses=True,
         )
 

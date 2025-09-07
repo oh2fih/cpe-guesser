@@ -16,7 +16,9 @@ from dynaconf import Dynaconf
 settings = Dynaconf(settings_files=["../config/settings.yaml"])
 cpe_path = settings.cpe.path
 cpe_source = settings.cpe.source
-rdb = valkey.Valkey(host=settings.valkey.host, port=settings.valkey.port, db=8)
+rdb = valkey.Valkey(
+    host=settings.valkey.host, port=settings.valkey.port, db=settings.valkey.db
+)
 
 
 class CPEHandler(xml.sax.ContentHandler):
