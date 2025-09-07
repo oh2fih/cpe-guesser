@@ -6,14 +6,17 @@ from dynaconf import Dynaconf
 
 # Configuration
 settings = Dynaconf(settings_files=["../config/settings.yaml"])
+valkey_host = settings.get("valkey.host", "127.0.0.1")
+valkey_port = settings.get("valkey.port", 6379)
+valkey_db = settings.get("valkey.db", 8)
 
 
 class CPEGuesser:
     def __init__(self):
         self.rdb = valkey.Valkey(
-            host=settings.valkey.host,
-            port=settings.valkey.port,
-            db=settings.valkey.db,
+            host=valkey_host,
+            port=valkey_port,
+            db=valkey_db,
             decode_responses=True,
         )
 
