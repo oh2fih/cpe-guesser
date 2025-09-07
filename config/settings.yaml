@@ -3,6 +3,7 @@ server:
 valkey:
   host: 127.0.0.1
   port: 6379
+  db: 8
 cpe:
   path: '../data/official-cpe-dictionary_v2.3.xml'
   source: 'https://nvd.nist.gov/feeds/xml/cpe/dictionary/official-cpe-dictionary_v2.3.xml.gz'
