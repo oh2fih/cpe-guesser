@@ -13,10 +13,10 @@ from lib.cpeimport import CPEDownloader, NVDCPEHandler, XMLCPEHandler
 
 # Configuration
 settings = Dynaconf(settings_files=["../config/settings.yaml"])
-cpe_path = settings.get("cpe.path", "../data/official-cpe-dictionary_v2.3.xml")
+cpe_path = settings.get("cpe.path", "./data/nvdcpe-2.0.tar")
 cpe_source = settings.get(
     "cpe.source",
-    "https://nvd.nist.gov/feeds/xml/cpe/dictionary/official-cpe-dictionary_v2.3.xml.gz",
+    "https://nvd.nist.gov/feeds/json/cpe/2.0/nvdcpe-2.0.tar.gz",
 )
 valkey_host = settings.get("valkey.host", "127.0.0.1")
 valkey_port = settings.get("valkey.port", 6379)
