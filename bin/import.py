@@ -9,7 +9,7 @@ import urllib.error
 from dynaconf import Dynaconf
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from lib.cpeimport import CPEDownloader, XMLCPEHandler
+from lib.cpeimport import CPEDownloader, NVDCPEHandler, XMLCPEHandler
 
 # Configuration
 settings = Dynaconf(settings_files=["../config/settings.yaml"])
@@ -72,14 +72,18 @@ if __name__ == "__main__":
 
     print("Populating the database (please be patient)...")
 
-    if cpe_file.endswith(".xml"):
+    _, ext = os.path.splitext(cpe_file)
+    ext = ext.lower()
+    if ext == ".tar" or ext == ".json":
+        handler = NVDCPEHandler(rdb)
+    elif ext == ".xml":
         handler = XMLCPEHandler(rdb)
     else:
         print(f"Error! No handler for the file type of {cpe_file}")
         sys.exit(1)
 
-    handler.parse_file(
-        cpe_file,
-    )
+    print(f"Using {handler.__class__.__name__} to parse file {cpe_file}...")
+    label = f"{handler.__class__.__name__}[{os.path.basename(cpe_file)}]"
+    handler.parse_file(cpe_file, label=label)
 
     print(f"Done! {rdb.dbsize()} keys inserted.")
