@@ -153,6 +153,34 @@ python3 lookup.py microsoft sql server | jq .
 
 A CPE entry is composed of a human readable name with some references and the structured CPE name.
 
+NVD CPE Dictionary 2.0 JSON feeds:
+
+```json
+    {
+      "cpe": {
+        "deprecated": false,
+        "cpeName": "cpe:2.3:a:10web:form_maker:1.7.17:*:*:*:*:wordpress:*:*",
+        "cpeNameId": "A6F0EC33-CD55-4FE2-8B55-5C0F9CC88BF9",
+        "lastModified": "2019-06-04T16:47:17.300",
+        "created": "2019-06-04T16:47:17.300",
+        "titles": [
+          {
+            "title": "10web Form Maker 1.7.17 for WordPress",
+            "lang": "en"
+          }
+        ],
+        "refs": [
+          {
+            "ref": "https://wordpress.org/plugins/form-maker/#developers",
+            "type": "Change Log"
+          }
+        ]
+      }
+    },
+```
+
+Legacy XML feeds:
+
 ```xml
   <cpe-item name="cpe:/a:10web:form_maker:1.7.17::~~~wordpress~~">
     <title xml:lang="en-US">10web Form Maker 1.7.17 for WordPress</title>
@@ -183,8 +211,8 @@ cpe (vendor:product) per version to give a probability of the CPE appearance.
 Software is open source and released under a 2-Clause BSD License
 
 ~~~
-  Copyright (C) 2021-2024 Alexandre Dulaunoy
-  Copyright (C) 2021-2024 Esa Jokinen
+  Copyright (C) 2021-2025 Alexandre Dulaunoy
+  Copyright (C) 2021-2025 Esa Jokinen
 ~~~
 
 We welcome contributions! All contributors collectively own the CPE Guesser project. By contributing, contributors also acknowledge the [Developer Certificate of Origin](https://developercertificate.org/) when submitting pull requests or using other methods of contribution.
