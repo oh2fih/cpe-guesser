@@ -21,6 +21,7 @@ class NVDCPEHandler(CPEImportHandler):
         with tarfile.open(path, "r:*") as tar:
             for member in tar.getmembers():
                 if member.isfile() and member.name.endswith(".json"):
+                    print(f"{self.__class__.__name__} parsing {member.name}...")
                     with tar.extractfile(member) as f:
                         self.process_json_file(f)
 
