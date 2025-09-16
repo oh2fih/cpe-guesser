@@ -1,4 +1,7 @@
 bin/__pycache__/
 lib/__pycache__/
-data/*.xml
+lib/cpeimport/__pycache__/
 data/*.gz
+data/*.tar
+data/*.json
+data/*.xml
