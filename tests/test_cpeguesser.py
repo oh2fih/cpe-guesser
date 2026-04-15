@@ -96,7 +96,9 @@ class CPEGuesserTestCase(unittest.TestCase):
 
         guesser = CPEGuesser(rdb=rdb)
 
-        self.assertEqual(guesser.guessCpe(["cisco", "router"], part="h"), [(5, hardware)])
+        self.assertEqual(
+            guesser.guessCpe(["cisco", "router"], part="h"), [(5, hardware)]
+        )
         self.assertEqual(
             guesser.guessCpe(["cisco", "router"], part="a"), [(5, application)]
         )
