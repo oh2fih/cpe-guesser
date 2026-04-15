@@ -12,6 +12,8 @@ valkey_db = settings.get("valkey.db", 8)
 
 
 class CPEGuesser:
+    VALID_CPE_PARTS = {"a", "h", "o"}
+
     def __init__(self, rdb=None):
         self.rdb = rdb or valkey.Valkey(
             host=valkey_host,
@@ -28,7 +30,20 @@ class CPEGuesser:
         score = self.rdb.zscore("rank:cpe", cpe)
         return score or 0
 
-    def guessCpe(self, words):
+    def _is_matching_part(self, cpe, part):
+        if part is None:
+            return True
+        fields = cpe.split(":")
+        if len(fields) < 3:
+            return False
+        return fields[2] == part
+
+    def guessCpe(self, words, part=None):
+        if part is not None:
+            part = part.lower()
+            if part not in self.VALID_CPE_PARTS:
+                return []
+
         k = []
         for keyword in words:
             k.append(f"w:{keyword.lower()}")
@@ -44,6 +59,8 @@ class CPEGuesser:
         lowered_words = [word.lower() for word in words]
 
         for cpe in result:
+            if not self._is_matching_part(cpe, part):
+                continue
             search_score = sum(self._word_score(word, cpe) for word in lowered_words)
             rank_score = self._rank_score(cpe)
             total_score = search_score + rank_score

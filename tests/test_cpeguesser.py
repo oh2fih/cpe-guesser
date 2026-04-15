@@ -83,6 +83,31 @@ class CPEGuesserTestCase(unittest.TestCase):
             ],
         )
 
+    def test_guess_cpe_filters_results_by_part(self):
+        rdb = FakeRDB()
+        application = "cpe:2.3:a:cisco:router"
+        hardware = "cpe:2.3:h:cisco:router"
+
+        for key in ("w:cisco", "w:router"):
+            rdb.sadd(key, application)
+            rdb.sadd(key, hardware)
+
+        rdb.zadd("rank:cpe", {application: 5, hardware: 5})
+
+        guesser = CPEGuesser(rdb=rdb)
+
+        self.assertEqual(guesser.guessCpe(["cisco", "router"], part="h"), [(5, hardware)])
+        self.assertEqual(
+            guesser.guessCpe(["cisco", "router"], part="a"), [(5, application)]
+        )
+
+    def test_guess_cpe_rejects_unknown_part(self):
+        rdb = FakeRDB()
+        rdb.sadd("w:cisco", "cpe:2.3:a:cisco:router")
+        guesser = CPEGuesser(rdb=rdb)
+
+        self.assertEqual(guesser.guessCpe(["cisco"], part="x"), [])
+
 
 if __name__ == "__main__":
     unittest.main()
