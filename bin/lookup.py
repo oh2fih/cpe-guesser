@@ -27,10 +27,15 @@ if __name__ == "__main__":
         help="Return the best CPE matching the keywords given",
         default=False,
     )
+    parser.add_argument(
+        "--part",
+        choices=sorted(CPEGuesser.VALID_CPE_PARTS),
+        help="Optional CPE part filter: a (application), h (hardware), o (operating system)",
+    )
     args = parser.parse_args()
 
     cpeGuesser = CPEGuesser()
-    r = cpeGuesser.guessCpe(args.word)
+    r = cpeGuesser.guessCpe(args.word, part=args.part)
     if not args.unique:
         print(json.dumps(r))
     else:

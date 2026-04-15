@@ -17,6 +17,12 @@ Alternatively, you can call the web server (after running `server.py`). For exam
 
 ```bash
 curl -s -X POST http://localhost:8000/search -d '{"query": ["tomcat"]}' | jq .
+
+# Optional CPE part filter (a=application, h=hardware, o=operating system)
+curl -s -X POST http://localhost:8000/search -d '{"query": ["cisco", "router"], "part": "h"}' | jq .
+
+# GET is also supported
+curl -s "http://localhost:8000/search?q=cisco+router&part=h" | jq .
 ```
 
 ### Installation
@@ -93,7 +99,7 @@ curl -s -X POST https://cpe-guesser.cve-search.org/unique -d "{\"query\": [\"out
 ### Command line - `lookup.py`
 
 ```text
-usage: lookup.py [-h] [--unique] WORD [WORD ...]
+usage: lookup.py [-h] [--unique] [--part {a,h,o}] WORD [WORD ...]
 
 Find potential CPE names from a list of keyword(s) and return a JSON of the results
 
@@ -101,8 +107,9 @@ positional arguments:
   WORD        One or more keyword(s) to lookup
 
 options:
-  -h, --help  show this help message and exit
-  --unique    Return the best CPE matching the keywords given
+  -h, --help        show this help message and exit
+  --unique          Return the best CPE matching the keywords given
+  --part {a,h,o}    Optional CPE part filter: a (application), h (hardware), o (operating system)
 ```
 
 ```bash
